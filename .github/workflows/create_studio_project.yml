@@ -5,6 +5,8 @@ on:
     workflows: ["Initial Setup"]
     types:
       - completed
+  workflow_dispatch:
+  workflow_call:
 
 env:
   GEN: ${{ secrets.GEN || 'ws2' }}
