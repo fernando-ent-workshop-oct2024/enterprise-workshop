@@ -1,5 +1,5 @@
 extend schema
-  @link(url: "https://specs.apollo.dev/federation/v2.10", import:
+  @link(url: "https://specs.apollo.dev/federation/v2.8", import:
     [
       "@key",
       "@tag",
@@ -8,26 +8,9 @@ extend schema
       "@requiresScopes",
     ]
   )
-  @link(
-    url: "https://specs.apollo.dev/connect/v0.1"
-    import: ["@connect", "@source"]
-  )
-  @source(
-    name: "api"
-    http: { baseURL: "https://rest-api-j3nprurqka-uc.a.run.app/api" }
-  )
 
 type Query {
-  order(id: ID!): Order @authenticated @connect(
-    source: "api"
-    http: { GET: "/orders/{$args.id}" }
-    selection: """
-    id
-    buyer: { id: $.customerId }
-    items: $.variantIds { id: $ }
-    """
-    entity: true
-  )
+  order(id: ID!): Order @authenticated
 }
 
 type Order @key(fields: "id") {
@@ -36,7 +19,7 @@ type Order @key(fields: "id") {
   items: [ProductVariant!]! @requiresScopes(scopes: [["order:items"]])
 }
 
-type User @key(fields: "id", resolvable: false) {
+type User @key(fields: "id") {
   id: ID!
 }
 
