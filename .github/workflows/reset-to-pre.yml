@@ -1,0 +1,120 @@
+name: Reset Lab files to default config
+
+on:
+  workflow_dispatch:
+    inputs:
+      lab:
+        type: choice
+        description: 'Which lab are you starting?'
+        required: true
+        default: 'connectors'
+        options: # these should be the same as the pre and post folders
+          - Operation Limits # -> operation-limits (default folder)
+          - Safelisting # -> safelisting (special folder)
+          - Authentication and Authorization # -> auth-and-authz (default folder)
+          - Coprocessor # -> coprocessor (default folder)
+          - Schema Proposals # -> schema-proposals (default folder)
+          - Progressive Override # -> progressive-override (default folder)
+          - Federated Subscriptions # -> federated-subscriptions (default folder)
+          - Apollo Connectors # -> apollo-connectors (default folder)
+
+env:
+  GEN: ${{ secrets.GEN || 'ws1' }}
+  APOLLO_KEY: ${{ vars.TOKEN }}
+
+jobs:
+  reset:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Display Original Input
+        run: |
+          echo "Original Lab: '${{ github.event.inputs.lab }}'"
+
+      - name: Normalize Lab Name
+        id: normalize
+        run: |
+          # Retrieve the input
+          INPUT="${{ github.event.inputs.lab }}"
+
+          # Convert to lowercase and replace spaces with '-'
+          NORMALIZED=$(echo "$INPUT" | tr '[:upper:]' '[:lower:]' | tr ' ' '-')
+
+          # Output the normalized value
+          echo "labNormalized=$NORMALIZED" >> $GITHUB_OUTPUT
+        shell: bash
+
+      - name: Deploy Based on Lab
+        id: folder
+        run: |
+          LAB="${{ steps.normalize.outputs.labNormalized }}"
+          echo "Lab folder is: $LAB"
+
+          case "$LAB" in
+            safelisting)
+              echo "Using special setup for Safelisting..."
+              echo "sourceFolder=default" >> $GITHUB_OUTPUT
+              ;;
+            *)
+              echo "Using 'default' folder for: $LAB"
+              echo "sourceFolder=default" >> $GITHUB_OUTPUT
+              ;;
+          esac
+
+      - name: Reset files
+        id: reset
+        run: |
+          SRC="$GITHUB_WORKSPACE/.github/pre/${{ steps.folder.outputs.sourceFolder }}"
+          TRG="$GITHUB_WORKSPACE"
+          MOD=false
+
+          if ! cmp -s "$SRC/orders-schema.graphql" "$TRG/orders-schema.graphql"; then
+            echo "orders-schema.graphql are different"
+            cp -f $SRC/orders-schema.graphql $TRG/orders-schema.graphql
+            MOD=true
+          else
+            echo "orders-schema.graphql are identical"
+          fi
+
+          if ! cmp -s "$SRC/customers-schema.graphql" "$TRG/customers-schema.graphql"; then
+            echo "customers-schema.graphql are different"
+            cp -f $SRC/customers-schema.graphql $TRG/customers-schema.graphql
+            MOD=true
+          else
+            echo "customers-schema.graphql are identical"
+          fi
+
+          if ! cmp -s "$SRC/products-schema.graphql" "$TRG/products-schema.graphql"; then
+            echo "products-schema.graphql are different"
+            cp -f $SRC/products-schema.graphql $TRG/products-schema.graphql
+            MOD=true
+          else
+            echo "products-schema.graphql are identical"
+          fi
+
+          if ! cmp -s "$SRC/router.yaml" "$TRG/router/router.yaml"; then
+            echo "router.yaml are different"
+            cp -f $SRC/router.yaml $TRG/router/router.yaml
+            MOD=true
+          else
+            echo "router.yaml are identical"
+          fi
+
+          echo "filesModified=$MOD" >> $GITHUB_OUTPUT
+
+      - name: Commit changes
+        run: |
+          MODIFIED="${{ steps.reset.outputs.filesModified }}"
+          echo "Files modified: $MODIFIED"
+
+          if "$MODIFIED" eq "true"; then
+            git config --global user.name 'Automated Process'
+            git config --global user.email 'automated@users.noreply.github.com'
+            git commit -am "Prep env for connectors lab"
+            git push
+          else
+            echo "No changes to commit"
+          fi
