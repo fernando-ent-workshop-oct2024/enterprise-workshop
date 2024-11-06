@@ -60,6 +60,9 @@ jobs:
             authentication-and-authorization)
               echo "sourceFolder=authn-and-authz" >> $GITHUB_OUTPUT
               ;;
+            coprocessor)
+              echo "sourceFolder=authn-and-authz" >> $GITHUB_OUTPUT
+              ;;
             *)
               echo "Using 'default' folder for: $LAB"
               echo "sourceFolder=default" >> $GITHUB_OUTPUT
