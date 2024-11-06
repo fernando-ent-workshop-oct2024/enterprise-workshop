@@ -11,7 +11,7 @@ on:
         options: # these should be the same as the pre and post folders
           - Operation Limits # -> operation-limits (default folder)
           - Safelisting # -> safelisting (special folder)
-          - Authentication and Authorization # -> auth-and-authz (default folder)
+          - Authentication and Authorization # -> authn-and-authz (default folder)
           - Coprocessor # -> coprocessor (default folder)
           - Schema Proposals # -> schema-proposals (default folder)
           - Progressive Override # -> progressive-override (default folder)
@@ -57,8 +57,8 @@ jobs:
             operation-limits)
               echo "sourceFolder=operation-limits" >> $GITHUB_OUTPUT
               ;;
-            progressive-override)
-              echo "sourceFolder=progressive-override" >> $GITHUB_OUTPUT
+            authentication-and-authorization)
+              echo "sourceFolder=authn-and-authz" >> $GITHUB_OUTPUT
               ;;
             *)
               echo "Using 'default' folder for: $LAB"
