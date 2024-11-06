@@ -1,4 +1,4 @@
-name: Reset Module files to default
+name: Reset Module files to final state
 
 on:
   workflow_dispatch:
