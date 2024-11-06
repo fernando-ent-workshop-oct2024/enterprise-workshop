@@ -54,9 +54,9 @@ jobs:
           echo "Module folder is: $LAB"
 
           case "$LAB" in
-            safelisting)
+            progressive-override)
               echo "Using special setup for Safelisting..."
-              echo "sourceFolder=default" >> $GITHUB_OUTPUT
+              echo "sourceFolder=progressive-override" >> $GITHUB_OUTPUT
               ;;
             *)
               echo "Using 'default' folder for: $LAB"
@@ -120,6 +120,6 @@ jobs:
           fi
   publish:
     needs: reset
-    if: github.event.inputs.module == 'Schema Proposals'
+    # if: github.event.inputs.module == 'Schema Proposals' # do we need this check?
     uses: ./.github/workflows/publish-subgraph.yml
     secrets: inherit
