@@ -120,6 +120,6 @@ jobs:
           fi
   publish:
     needs: reset
-    if: ${{ github.event.inputs.module }} == 'Schema Proposals'
+    if: github.event.inputs.module == 'Schema Proposals'
     uses: ./.github/workflows/publish-subgraph.yml
     secrets: inherit
