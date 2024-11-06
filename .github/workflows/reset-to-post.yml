@@ -125,3 +125,8 @@ jobs:
     # if: github.event.inputs.module == 'Schema Proposals' # do we need this check?
     uses: ./.github/workflows/publish-subgraph.yml
     secrets: inherit
+  udpate-router:
+    needs: reset
+    # if: github.event.inputs.module == 'Schema Proposals' # do we need this check?
+    uses: ./.github/workflows/update-router.yml
+    secrets: inherit
