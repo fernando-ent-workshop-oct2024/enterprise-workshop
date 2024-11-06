@@ -63,6 +63,9 @@ jobs:
             coprocessor)
               echo "sourceFolder=coprocessor" >> $GITHUB_OUTPUT
               ;;
+            progressive-override)
+              echo "sourceFolder=progressive-override" >> $GITHUB_OUTPUT
+              ;;
             *)
               echo "Using 'default' folder for: $LAB"
               echo "sourceFolder=default" >> $GITHUB_OUTPUT
