@@ -6,7 +6,6 @@ extend schema
       "@external",
       "@tag",
       "@shareable"
-      "@override"
     ]
   )
 
@@ -16,7 +15,7 @@ type Query {
 }
 
 """
-An user account in our system - testing override
+An user account in our system
 """
 type User @key(fields: "id") {
   id: ID!
@@ -27,11 +26,9 @@ type User @key(fields: "id") {
   phone: String
     @tag(name: "private")
     @shareable
-    @override(from: "orders", label: "percent(50)")
   email: String!
     @tag(name: "private")
     @shareable
-    @override(from: "orders", label: "percent(50)")
 
   """
   The user's active cart session. Once the cart items have been purchases, they transition to an Order
