@@ -20,7 +20,7 @@ jobs:
           curl -sSL https://rover.apollo.dev/nix/v0.27.0-preview.0 | sh
           echo "$HOME/.rover/bin" >> $GITHUB_PATH
 
-      - name: Rover Subgraph Delete Products
+      - name: Rover Subgraph Delete Customers
         run: |
           rover subgraph delete ${{vars.ACTOR}}${{ env.GEN }}@current \
             --name customers \
@@ -32,7 +32,7 @@ jobs:
             --name orders \
             --confirm
 
-      - name: Rover Subgraph Delete Customers
+      - name: Rover Subgraph Delete Products
         run: |
           rover subgraph delete ${{vars.ACTOR}}${{ env.GEN }}@current \
             --name products \
