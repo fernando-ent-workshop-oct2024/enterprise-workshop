@@ -23,7 +23,7 @@ jobs:
       - name: Rover Subgraph Delete Products
         run: |
           rover subgraph delete ${{vars.ACTOR}}${{ env.GEN }}@current \
-            --name products \
+            --name customers \
             --confirm
 
       - name: Rover Subgraph Delete Orders
@@ -35,5 +35,5 @@ jobs:
       - name: Rover Subgraph Delete Customers
         run: |
           rover subgraph delete ${{vars.ACTOR}}${{ env.GEN }}@current \
-            --name customers \
+            --name products \
             --confirm
