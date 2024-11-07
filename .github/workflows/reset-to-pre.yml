@@ -130,7 +130,7 @@ jobs:
     secrets: inherit
 
   publish:
-    needs: reset
+    needs: delete
     if: ${{ needs.reset.outputs.files_modified == 'true' }}
     uses: ./.github/workflows/publish-subgraph.yml
     secrets: inherit
