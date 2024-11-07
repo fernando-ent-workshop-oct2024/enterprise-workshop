@@ -22,6 +22,7 @@ jobs:
 
       - name: Rover Subgraph Delete Customers
         run: |
+          echo "APOLLO_KEY=${{ env.APOLLO_KEY }}"
           rover subgraph delete ${{vars.ACTOR}}${{ env.GEN }}@current \
             --name customers \
             --confirm
