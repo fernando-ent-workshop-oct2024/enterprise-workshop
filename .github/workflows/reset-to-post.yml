@@ -126,12 +126,13 @@ jobs:
           else
             echo "No changes to commit"
           fi
-  publish:
+  # other jobs
+  udpate-router:
     needs: reset
+    uses: ./.github/workflows/update-router.yml
+    secrets: inherit
+  publish:
+    needs: udpate-router
     # if: github.event.inputs.module == 'Schema Proposals' # do we need this check?
     uses: ./.github/workflows/publish-subgraph.yml
-    secrets: inherit
-  udpate-router:
-    needs: publish
-    uses: ./.github/workflows/update-router.yml
     secrets: inherit
