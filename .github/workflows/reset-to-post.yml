@@ -24,6 +24,8 @@ env:
 
 jobs:
   reset:
+    outputs:
+      files_modified: ${{ steps.commit.outputs.files_modified }}
     runs-on: ubuntu-latest
 
     steps:
@@ -111,28 +113,33 @@ jobs:
             echo "router.yaml are identical"
           fi
 
-          echo "filesModified=$MOD" >> $GITHUB_OUTPUT
+          echo "files_modified=$MOD" >> $GITHUB_OUTPUT
 
       - name: Commit changes
+        id: commit
         run: |
-          MODIFIED="${{ steps.reset.outputs.filesModified }}"
+          MODIFIED="${{ steps.reset.outputs.files_modified }}"
           echo "Files modified: $MODIFIED"
 
           if "$MODIFIED" eq "true"; then
             git config --global user.name 'Automated Process'
             git config --global user.email 'automated@users.noreply.github.com'
-            git commit -am "Prep env for connectors module"
+            git commit -am "Prep env for ${{ github.event.inputs.module }} module"
             git push
           else
             echo "No changes to commit"
           fi
+          echo "files_modified=$MODIFIED" >> $GITHUB_OUTPUT
+
   # other jobs
   udpate-router:
     needs: reset
+    if: ${{ needs.reset.outputs.files_modified == 'true' }}
     uses: ./.github/workflows/update-router.yml
     secrets: inherit
+
   publish:
-    needs: udpate-router
-    # if: github.event.inputs.module == 'Schema Proposals' # do we need this check?
+    needs: [reset, udpate-router]
+    if: ${{ needs.reset.outputs.files_modified == 'true' }}
     uses: ./.github/workflows/publish-subgraph.yml
     secrets: inherit
