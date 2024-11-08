@@ -79,11 +79,13 @@ jobs:
         run: |
           SRC="$GITHUB_WORKSPACE/.github/post/${{ steps.folder.outputs.sourceFolder }}"
           TRG="$GITHUB_WORKSPACE"
+          TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
           MOD=false
 
           if ! cmp -s "$SRC/orders-schema.graphql" "$TRG/orders-schema.graphql"; then
             echo "orders-schema.graphql are different"
             cp -f $SRC/orders-schema.graphql $TRG/orders-schema.graphql
+            echo "# Last modified: $TIMESTAMP" >> $TRG/orders-schema.graphql
             MOD=true
           else
             echo "orders-schema.graphql are identical"
@@ -92,6 +94,7 @@ jobs:
           if ! cmp -s "$SRC/customers-schema.graphql" "$TRG/customers-schema.graphql"; then
             echo "customers-schema.graphql are different"
             cp -f $SRC/customers-schema.graphql $TRG/customers-schema.graphql
+            echo "# Last modified: $TIMESTAMP" >> $TRG/customers-schema.graphql
             MOD=true
           else
             echo "customers-schema.graphql are identical"
@@ -100,6 +103,7 @@ jobs:
           if ! cmp -s "$SRC/products-schema.graphql" "$TRG/products-schema.graphql"; then
             echo "products-schema.graphql are different"
             cp -f $SRC/products-schema.graphql $TRG/products-schema.graphql
+            echo "# Last modified: $TIMESTAMP" >> $TRG/products-schema.graphql
             MOD=true
           else
             echo "products-schema.graphql are identical"
