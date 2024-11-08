@@ -15,7 +15,7 @@ type Query {
 }
 
 """
-An user account in our system - is it really published?
+An user account in our system
 """
 type User @key(fields: "id") {
   id: ID!
@@ -81,3 +81,4 @@ type PaymentMethod {
   id: ID!
   cardNumber: String!
 }
+# Last modified: 2024-11-08T14:45:22Z
