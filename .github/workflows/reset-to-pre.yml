@@ -82,6 +82,7 @@ jobs:
             echo "orders-schema.graphql are different"
             cp -f $SRC/orders-schema.graphql $TRG/orders-schema.graphql
             echo "# Last modified: $TIMESTAMP" >> $TRG/orders-schema.graphql
+            cat $TRG/orders-schema.graphql
             MOD=true
           else
             echo "orders-schema.graphql are identical"
@@ -91,6 +92,7 @@ jobs:
             echo "customers-schema.graphql are different"
             cp -f $SRC/customers-schema.graphql $TRG/customers-schema.graphql
             echo "# Last modified: $TIMESTAMP" >> $TRG/customers-schema.graphql
+            cat $TRG/customers-schema.graphql
             MOD=true
           else
             echo "customers-schema.graphql are identical"
@@ -100,6 +102,7 @@ jobs:
             echo "products-schema.graphql are different"
             cp -f $SRC/products-schema.graphql $TRG/products-schema.graphql
             echo "# Last modified: $TIMESTAMP" >> $TRG/products-schema.graphql
+            cat $TRG/products-schema.graphql
             MOD=true
           else
             echo "products-schema.graphql are identical"
