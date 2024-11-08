@@ -1,10 +1,7 @@
 extend schema
-  @link(url: "https://specs.apollo.dev/federation/v2.8", import:
-    [
-      "@key",
-      "@tag",
-      "@shareable"
-    ]
+  @link(
+    url: "https://specs.apollo.dev/federation/v2.8"
+    import: ["@key", "@tag", "@shareable"]
   )
 
 type Query {
@@ -37,11 +34,9 @@ type Order @key(fields: "id") {
 
 type User @key(fields: "id") {
   id: ID!
-  phone: String @tag(name: "private") @shareable
-  email: String! @tag(name: "private") @shareable
 }
 
 type ProductVariant @key(fields: "id", resolvable: false) {
   id: ID!
 }
-# Last modified: 2024-11-08T15:22:23Z
+# Last modified: 2024-11-08T15:40:07Z
