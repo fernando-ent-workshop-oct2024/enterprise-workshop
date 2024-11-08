@@ -69,6 +69,7 @@ jobs:
       - name: Reset files
         id: reset
         run: |
+          echo "Checking files tfrom $GITHUB_WORKSPACE..."
           SRC="$GITHUB_WORKSPACE/.github/pre/${{ steps.folder.outputs.sourceFolder }}"
           TRG="$GITHUB_WORKSPACE"
           MOD=false
