@@ -131,14 +131,14 @@ jobs:
           fi
           echo "files_modified=$MODIFIED" >> $GITHUB_OUTPUT
 
-  delete:
-    needs: reset
-    if: ${{ needs.reset.outputs.files_modified == 'true' }}
-    uses: ./.github/workflows/subgraph-delete.yml
-    secrets: inherit
+  # delete:
+  #   needs: reset
+  #   if: ${{ needs.reset.outputs.files_modified == 'true' }}
+  #   uses: ./.github/workflows/subgraph-delete.yml
+  #   secrets: inherit
 
   publish:
-    needs: [reset, delete]
+    needs: [reset]
     if: ${{ needs.reset.outputs.files_modified == 'true' }}
     uses: ./.github/workflows/publish-subgraph.yml
     secrets: inherit
