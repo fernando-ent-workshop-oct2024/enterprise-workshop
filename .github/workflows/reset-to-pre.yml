@@ -70,8 +70,11 @@ jobs:
         id: reset
         run: |
           echo "Checking files tfrom $GITHUB_WORKSPACE..."
-          SRC="$GITHUB_WORKSPACE/.github/pre/${{ steps.folder.outputs.sourceFolder }}"
-          TRG="$GITHUB_WORKSPACE"
+          # SRC="$GITHUB_WORKSPACE/.github/pre/${{ steps.folder.outputs.sourceFolder }}"
+          # TRG="$GITHUB_WORKSPACE"
+
+          SRC="./.github/pre/${{ steps.folder.outputs.sourceFolder }}"
+          TRG="."
           MOD=false
           TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
 
