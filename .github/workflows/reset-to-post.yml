@@ -131,7 +131,7 @@ jobs:
           if "$MODIFIED" eq "true"; then
             git config --global user.name 'Automated Process'
             git config --global user.email 'automated@users.noreply.github.com'
-            git commit -am "Prep env for ${{ github.event.inputs.module }} module"
+            git commit -am "Post env for ${{ github.event.inputs.module }} module"
             git push
           else
             echo "No changes to commit"
