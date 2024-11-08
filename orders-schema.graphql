@@ -7,6 +7,7 @@ extend schema
     ]
   )
 
+
 type Query {
   """
   Get a specific order by id. Meant to be used for a detailed view of an order
@@ -44,3 +45,4 @@ type User @key(fields: "id") {
 type ProductVariant @key(fields: "id", resolvable: false) {
   id: ID!
 }
+# Last modified: 2024-11-08T14:52:26Z
