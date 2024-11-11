@@ -152,4 +152,5 @@ jobs:
       - name: Trigger Target Workflow Asynchronously
         uses: peter-evans/repository-dispatch@v3
         with:
+          repository: ${{ github.repository }}
           event-type: publish-event
