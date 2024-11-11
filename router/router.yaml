@@ -28,5 +28,4 @@ subscription:
       subgraphs:
         products:
           path: /
-
 ## Enter Workshop Module Configs Below
