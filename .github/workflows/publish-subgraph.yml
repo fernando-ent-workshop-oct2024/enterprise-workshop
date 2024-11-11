@@ -3,6 +3,8 @@ name: Publish subgraphs to Apollo Studio
 on:
   workflow_dispatch:
   workflow_call:
+  repository_dispatch:
+    types: [publish-event]
 
 env:
   GEN: ${{ secrets.GEN || 'ws1' }}
