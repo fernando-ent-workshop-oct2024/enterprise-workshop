@@ -69,20 +69,14 @@ jobs:
       - name: Reset files
         id: reset
         run: |
-          echo "Checking files tfrom $GITHUB_WORKSPACE..."
-          # SRC="$GITHUB_WORKSPACE/.github/pre/${{ steps.folder.outputs.sourceFolder }}"
-          # TRG="$GITHUB_WORKSPACE"
-
+          echo "Checking files from $GITHUB_WORKSPACE..."
           SRC="./.github/pre/${{ steps.folder.outputs.sourceFolder }}"
           TRG="."
           MOD=false
-          TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
 
           if ! cmp -s "$SRC/orders-schema.graphql" "$TRG/orders-schema.graphql"; then
             echo "orders-schema.graphql are different"
             cp -f $SRC/orders-schema.graphql $TRG/orders-schema.graphql
-            echo "# Last modified: $TIMESTAMP" >> $TRG/orders-schema.graphql
-            cat $TRG/orders-schema.graphql
             MOD=true
           else
             echo "orders-schema.graphql are identical"
@@ -91,8 +85,6 @@ jobs:
           if ! cmp -s "$SRC/customers-schema.graphql" "$TRG/customers-schema.graphql"; then
             echo "customers-schema.graphql are different"
             cp -f $SRC/customers-schema.graphql $TRG/customers-schema.graphql
-            echo "# Last modified: $TIMESTAMP" >> $TRG/customers-schema.graphql
-            cat $TRG/customers-schema.graphql
             MOD=true
           else
             echo "customers-schema.graphql are identical"
@@ -101,8 +93,6 @@ jobs:
           if ! cmp -s "$SRC/products-schema.graphql" "$TRG/products-schema.graphql"; then
             echo "products-schema.graphql are different"
             cp -f $SRC/products-schema.graphql $TRG/products-schema.graphql
-            echo "# Last modified: $TIMESTAMP" >> $TRG/products-schema.graphql
-            cat $TRG/products-schema.graphql
             MOD=true
           else
             echo "products-schema.graphql are identical"
@@ -134,23 +124,11 @@ jobs:
           fi
           echo "files_modified=$MODIFIED" >> $GITHUB_OUTPUT
 
-  # delete:
-  #   needs: reset
-  #   if: ${{ needs.reset.outputs.files_modified == 'true' }}
-  #   uses: ./.github/workflows/subgraph-delete.yml
-  #   secrets: inherit
-
-  # publish:
-  #   needs: [reset]
-  #   if: ${{ needs.reset.outputs.files_modified == 'true' }}
-  #   uses: ./.github/workflows/publish-subgraph.yml
-  #   secrets: inherit
-
   trigger:
+    needs: [reset]
     runs-on: ubuntu-latest
     steps:
       - name: Trigger Target Workflow Asynchronously
         uses: peter-evans/repository-dispatch@v3
         with:
-          repository: ${{ github.repository }}
           event-type: publish-event

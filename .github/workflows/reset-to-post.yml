@@ -68,6 +68,9 @@ jobs:
             progressive-override)
               echo "sourceFolder=progressive-override" >> $GITHUB_OUTPUT
               ;;
+            federated-subscriptions)
+              echo "sourceFolder=federated-subscriptions)" >> $GITHUB_OUTPUT
+              ;;
             *)
               echo "Using 'default' folder for: $LAB"
               echo "sourceFolder=default" >> $GITHUB_OUTPUT
@@ -78,18 +81,13 @@ jobs:
         id: reset
         run: |
           echo "Checking files from $GITHUB_WORKSPACE..."
-          # SRC="$GITHUB_WORKSPACE/.github/post/${{ steps.folder.outputs.sourceFolder }}"
-          # TRG="$GITHUB_WORKSPACE"
           SRC="./.github/post/${{ steps.folder.outputs.sourceFolder }}"
           TRG="."
-          TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
           MOD=false
 
           if ! cmp -s "$SRC/orders-schema.graphql" "$TRG/orders-schema.graphql"; then
             echo "orders-schema.graphql are different"
             cp -f $SRC/orders-schema.graphql $TRG/orders-schema.graphql
-            echo "# Last modified: $TIMESTAMP" >> $TRG/orders-schema.graphql
-            cat $TRG/orders-schema.graphql
             MOD=true
           else
             echo "orders-schema.graphql are identical"
@@ -98,8 +96,6 @@ jobs:
           if ! cmp -s "$SRC/customers-schema.graphql" "$TRG/customers-schema.graphql"; then
             echo "customers-schema.graphql are different"
             cp -f $SRC/customers-schema.graphql $TRG/customers-schema.graphql
-            echo "# Last modified: $TIMESTAMP" >> $TRG/customers-schema.graphql
-            cat $TRG/customers-schema.graphql
             MOD=true
           else
             echo "customers-schema.graphql are identical"
@@ -108,8 +104,6 @@ jobs:
           if ! cmp -s "$SRC/products-schema.graphql" "$TRG/products-schema.graphql"; then
             echo "products-schema.graphql are different"
             cp -f $SRC/products-schema.graphql $TRG/products-schema.graphql
-            echo "# Last modified: $TIMESTAMP" >> $TRG/products-schema.graphql
-            cat $TRG/products-schema.graphql
             MOD=true
           else
             echo "products-schema.graphql are identical"
@@ -148,13 +142,8 @@ jobs:
     uses: ./.github/workflows/update-router.yml
     secrets: inherit
 
-  # publish:
-  #   needs: [reset, udpate-router]
-  #   if: ${{ needs.reset.outputs.files_modified == 'true' }}
-  #   uses: ./.github/workflows/publish-subgraph.yml
-  #   secrets: inherit
-
   trigger:
+    needs: [reset, udpate-router]
     runs-on: ubuntu-latest
     steps:
       - name: Trigger Target Workflow Asynchronously
