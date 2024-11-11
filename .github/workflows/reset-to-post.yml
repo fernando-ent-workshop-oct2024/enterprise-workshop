@@ -148,8 +148,16 @@ jobs:
     uses: ./.github/workflows/update-router.yml
     secrets: inherit
 
-  publish:
-    needs: [reset, udpate-router]
-    if: ${{ needs.reset.outputs.files_modified == 'true' }}
-    uses: ./.github/workflows/publish-subgraph.yml
-    secrets: inherit
+  # publish:
+  #   needs: [reset, udpate-router]
+  #   if: ${{ needs.reset.outputs.files_modified == 'true' }}
+  #   uses: ./.github/workflows/publish-subgraph.yml
+  #   secrets: inherit
+
+  trigger:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Target Workflow Asynchronously
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          event-type: publish-event
