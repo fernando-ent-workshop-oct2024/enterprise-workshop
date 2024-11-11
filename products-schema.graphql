@@ -1,5 +1,15 @@
 extend schema
-  @link(url: "https://specs.apollo.dev/federation/v2.8", import: ["@key"])
+  @link(url: "https://specs.apollo.dev/federation/v2.8", import:
+    [
+      "@key",
+      "@requires",
+      "@external",
+      "@tag",
+      "@shareable"
+      "@override"
+    ]
+  )
+
 
 type Query {
   """
@@ -149,4 +159,4 @@ type User @key(fields: "id") {
 #type Subscription {
 #ADD SUBSCRIPTION FIELDS AND RETURN TYPES HERE
 #}
-# Last modified: 2024-11-08T16:01:03Z
+# Last modified: 2024-11-11T14:06:52Z
