@@ -69,7 +69,7 @@ jobs:
               echo "sourceFolder=progressive-override" >> $GITHUB_OUTPUT
               ;;
             federated-subscriptions)
-              echo "sourceFolder=federated-subscriptions)" >> $GITHUB_OUTPUT
+              echo "sourceFolder=federated-subscriptions" >> $GITHUB_OUTPUT
               ;;
             *)
               echo "Using 'default' folder for: $LAB"
