@@ -28,4 +28,9 @@ subscription:
       subgraphs:
         products:
           path: /
+
 ## Enter Workshop Module Configs Below
+authorization:
+  require_authentication: false
+  preview_directives:
+    enabled: true
