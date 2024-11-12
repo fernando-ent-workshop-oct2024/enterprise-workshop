@@ -72,7 +72,7 @@ jobs:
               echo "sourceFolder=federated-subscriptions" >> $GITHUB_OUTPUT
               ;;
              apollo-connectors)
-              echo "sourceFolder= apollo-connectors" >> $GITHUB_OUTPUT
+              echo "sourceFolder=apollo-connectors" >> $GITHUB_OUTPUT
               ;;
             *)
               echo "Using 'default' folder for: $LAB"
