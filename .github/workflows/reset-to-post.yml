@@ -1,5 +1,5 @@
 name: Reset Module files to final state
-run-name: Reset Module '${{ github.event.inputs.module }}' to final state
+run-name: Set Module '${{ github.event.inputs.module }}' to final state
 
 on:
   workflow_dispatch:
@@ -69,6 +69,9 @@ jobs:
               ;;
             coprocessor)
               echo "sourceFolder=coprocessor" >> $GITHUB_OUTPUT
+              ;;
+            schema-proposals)
+              echo "sourceFolder=schema-proposals" >> $GITHUB_OUTPUT
               ;;
             progressive-override)
               echo "sourceFolder=progressive-override" >> $GITHUB_OUTPUT
