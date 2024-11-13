@@ -60,6 +60,9 @@ jobs:
             operation-limits)
               echo "sourceFolder=operation-limits" >> $GITHUB_OUTPUT
               ;;
+            safelisting)
+              echo "sourceFolder=safelisting" >> $GITHUB_OUTPUT
+              ;;
             authentication-and-authorization)
               echo "sourceFolder=authn-and-authz" >> $GITHUB_OUTPUT
               ;;
