@@ -118,7 +118,7 @@ jobs:
           ROUTER_MODIFIED="${{ steps.reset.outputs.router_file_modified }}"
           echo "Files modified: $MODIFIED, router: $ROUTER_MODIFIED"
 
-          if [ "$MODIFIED" = "true" ] || [ "$ROUTER_MODIFIED" = "value" ]; then
+          if [ "$MODIFIED" = "true" ] || [ "$ROUTER_MODIFIED" = "true" ]; then
             git config --global user.name 'Automated Process'
             git config --global user.email 'automated@users.noreply.github.com'
             git commit -am "Pre env for ${{ github.event.inputs.module }} module"
@@ -127,6 +127,7 @@ jobs:
             echo "No changes to commit"
           fi
           echo "files_modified=$MODIFIED" >> $GITHUB_OUTPUT
+          echo "router_file_modified=$ROUTER_MODIFIED" >> $GITHUB_OUTPUT
 
   trigger-router-update:
     needs: [reset]
