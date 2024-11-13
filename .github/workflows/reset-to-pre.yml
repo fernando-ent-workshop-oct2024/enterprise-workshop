@@ -126,6 +126,7 @@ jobs:
 
   trigger:
     needs: [reset]
+    if: ${{ needs.reset.outputs.files_modified == 'true' }}
     runs-on: ubuntu-latest
     steps:
       - name: Trigger Target Workflow Asynchronously

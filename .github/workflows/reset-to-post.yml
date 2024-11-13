@@ -147,6 +147,7 @@ jobs:
 
   trigger:
     needs: [reset, udpate-router]
+    if: ${{ needs.reset.outputs.files_modified == 'true' }}
     runs-on: ubuntu-latest
     steps:
       - name: Trigger Target Workflow Asynchronously
