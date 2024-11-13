@@ -26,6 +26,7 @@ jobs:
   reset:
     outputs:
       files_modified: ${{ steps.commit.outputs.files_modified }}
+      router_file_modified: ${{ steps.commit.outputs.router_file_modified }}
     runs-on: ubuntu-latest
 
     steps:
@@ -87,6 +88,7 @@ jobs:
           SRC="./.github/post/${{ steps.folder.outputs.sourceFolder }}"
           TRG="."
           MOD=false
+          ROUTER_MOD=false
 
           if ! cmp -s "$SRC/orders-schema.graphql" "$TRG/orders-schema.graphql"; then
             echo "orders-schema.graphql are different"
@@ -115,12 +117,13 @@ jobs:
           if ! cmp -s "$SRC/router.yaml" "$TRG/router/router.yaml"; then
             echo "router.yaml are different"
             cp -f $SRC/router.yaml $TRG/router/router.yaml
-            MOD=true
+            ROUTER_MOD=true
           else
             echo "router.yaml are identical"
           fi
 
           echo "files_modified=$MOD" >> $GITHUB_OUTPUT
+          echo "router_file_modified=$MOD" >> $GITHUB_OUTPUT
 
       - name: Commit changes
         id: commit
@@ -138,19 +141,22 @@ jobs:
           fi
           echo "files_modified=$MODIFIED" >> $GITHUB_OUTPUT
 
-  # other jobs
-  udpate-router:
-    needs: reset
-    if: ${{ needs.reset.outputs.files_modified == 'true' }}
-    uses: ./.github/workflows/update-router.yml
-    secrets: inherit
+  trigger-router-update:
+    needs: [reset]
+    if: ${{ needs.reset.outputs.router_file_modified == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger router update asynchronously
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          event-type: update-router-event
 
-  trigger:
-    needs: [reset, udpate-router]
+  trigger-publish:
+    needs: [reset]
     if: ${{ needs.reset.outputs.files_modified == 'true' }}
     runs-on: ubuntu-latest
     steps:
-      - name: Trigger Target Workflow Asynchronously
+      - name: Trigger publish asynchronously
         uses: peter-evans/repository-dispatch@v3
         with:
           event-type: publish-event
