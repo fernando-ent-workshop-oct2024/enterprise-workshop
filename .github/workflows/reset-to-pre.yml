@@ -1,4 +1,4 @@
-name: Reset Module files to initial state
+run-name: Reset Module '${{ github.event.inputs.module }}' to initial state
 
 on:
   workflow_dispatch:
