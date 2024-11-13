@@ -5,7 +5,7 @@ on:
     inputs:
       module:
         type: choice
-        description: 'Which module are you starting?'
+        description: 'Which module are you running?'
         required: true
         default: 'connectors'
         options: # these should be the same as the pre and post folders
