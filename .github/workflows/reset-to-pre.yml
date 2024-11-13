@@ -115,9 +115,10 @@ jobs:
         id: commit
         run: |
           MODIFIED="${{ steps.reset.outputs.files_modified }}"
-          echo "Files modified: $MODIFIED"
+          ROUTER_MODIFIED="${{ steps.reset.outputs.router_file_modified }}"
+          echo "Files modified: $MODIFIED, router: $ROUTER_MODIFIED"
 
-          if "$MODIFIED" eq "true"; then
+          if [ "$MODIFIED" = "true" ] || [ "$ROUTER_MODIFIED" = "value" ]; then
             git config --global user.name 'Automated Process'
             git config --global user.email 'automated@users.noreply.github.com'
             git commit -am "Pre env for ${{ github.event.inputs.module }} module"
