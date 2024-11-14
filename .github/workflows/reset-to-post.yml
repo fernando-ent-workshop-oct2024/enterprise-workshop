@@ -14,7 +14,6 @@ on:
           - Safelisting # -> safelisting (special folder)
           - Authentication and Authorization # -> authn-and-authz (default folder)
           - Coprocessor # -> coprocessor (default folder)
-          - Schema Proposals # -> schema-proposals (default folder)
           - Progressive Override # -> progressive-override (default folder)
           - Federated Subscriptions # -> federated-subscriptions (default folder)
           - Apollo Connectors # -> apollo-connectors (default folder)
@@ -69,9 +68,6 @@ jobs:
               ;;
             coprocessor)
               echo "sourceFolder=coprocessor" >> $GITHUB_OUTPUT
-              ;;
-            schema-proposals)
-              echo "sourceFolder=schema-proposals" >> $GITHUB_OUTPUT
               ;;
             progressive-override)
               echo "sourceFolder=progressive-override" >> $GITHUB_OUTPUT
