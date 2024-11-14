@@ -29,3 +29,95 @@ subscription:
         products:
           path: /
 ## Enter Workshop Module Configs Below
+telemetry:
+  apollo:
+    field_level_instrumentation_sampler: 1
+    experimental_otlp_tracing_sampler: always_on
+  instrumentation:
+    events:
+      supergraph:
+        COST_CALCULATION:
+          message: 'cost calculation'
+          on: event_response
+          level: info
+          attributes:
+            graphql.operation.name: true
+            cost.estimated: true
+            cost.delta: true
+            cost.actual: true
+            cost.result: true
+    spans:
+      mode: 'spec_compliant'
+      supergraph:
+        attributes:
+          cost.estimated: true
+          cost.delta: true
+          cost.actual: true
+          cost.result: true
+    # Basic instrumentation
+    instruments:
+      default_requirement_level: recommended
+      supergraph:
+        cost.actual: # true # The actual cost
+          attributes:
+            cost.result: true # Of the estimated costs which of these would have been rejected
+            graphql.operation.name: true
+        cost.estimated: # The estimated cost
+          attributes:
+            cost.result: true # Of the estimated costs which of these would have been rejected
+            graphql.operation.name: true
+        cost.delta: true # Actual - estimated
+        # custom instrument
+        cost.rejected.operations:
+          type: histogram
+          value:
+            # Estimated cost is used to populate the histogram
+            cost: estimated
+          description: 'Estimated cost per rejected operation.'
+          unit: delta
+          # condition:
+          #  eq:
+          #    # Only show rejected operations.
+          #    - cost: result
+          #    - 'COST_ESTIMATED_TOO_EXPENSIVE'
+          attributes:
+            cost.result: true
+            graphql.operation.name: true
+
+  exporters:
+    tracing:
+      common:
+        service_name: 'workshop'
+        sampler: 1.0 # enable this for Studio OTEL spans
+      otlp:
+        enabled: true
+        endpoint: 'https://api.honeycomb.io:443'
+        protocol: grpc
+        grpc:
+          metadata:
+            'x-honeycomb-team': '2jN8jkeozV5bHoUFTcfc1B'
+            'x-honeycomb-dataset': 'demo'
+    metrics:
+      common:
+        service_name: 'workshop'
+        views:
+          # Define a custom view because cost is different than the default latency-oriented view of OpenTelemetry
+          - name: cost.*
+            aggregation:
+              histogram:
+                buckets:
+                  - 0
+                  - 10
+                  - 100
+                  - 150
+                  - 200
+                  - 250
+                  - 300
+      otlp:
+        enabled: true
+        endpoint: 'https://api.honeycomb.io:443'
+        protocol: grpc
+        grpc:
+          metadata:
+            'x-honeycomb-team': '2jN8jkeozV5bHoUFTcfc1B'
+            'x-honeycomb-dataset': 'workshop'
