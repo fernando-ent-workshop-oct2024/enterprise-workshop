@@ -31,6 +31,9 @@ subscription:
 
 ### Enter Workshop Module Configs Below
 telemetry:
+  instrumentation:
+    spans:
+      mode: 'spec_compliant'
   apollo:
     field_level_instrumentation_sampler: 1
 
