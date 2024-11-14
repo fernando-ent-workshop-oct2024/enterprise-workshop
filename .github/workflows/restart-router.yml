@@ -1,4 +1,4 @@
-name: Update Router on Cloud Run
+name: Restart Router on Cloud Run
 
 on:
   push:
@@ -27,3 +27,10 @@ jobs:
 
       - name: Add Secret data
         run: gcloud secrets versions add --data-file=./router/router.yaml ${{vars.ACTOR}}
+
+      - name: Redeploy Cloud Run Service
+        run: |
+          gcloud run services update ${{vars.ACTOR}}-router \
+            --platform managed \
+            --region us-central1 \
+            --quiet
