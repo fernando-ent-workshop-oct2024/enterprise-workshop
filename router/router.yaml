@@ -32,7 +32,7 @@ subscription:
 telemetry:
   apollo:
     field_level_instrumentation_sampler: 1
-    experimental_otlp_tracing_sampler: always_on
+    # experimental_otlp_tracing_sampler: always_on
   instrumentation:
     events:
       supergraph:
