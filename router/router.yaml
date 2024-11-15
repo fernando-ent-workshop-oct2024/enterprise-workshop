@@ -94,6 +94,9 @@ telemetry:
             graphql.operation.name: true
 
   exporters:
+    common:
+      service_name: 'demo'
+      sampler: 1.0 # enable this for Studio OTEL spans
     tracing:
       otlp:
         enabled: true
@@ -104,7 +107,32 @@ telemetry:
           metadata:
             "api-key":
               - eu01xx9c3c76a68efb2a90b3b93863d0FFFFNRAL
-
+    metrics:
+      common:
+        service_name: 'demo'
+        views:
+          # Define a custom view because cost is different than the default latency-oriented view of OpenTelemetry
+          - name: cost.*
+            aggregation:
+              histogram:
+                buckets:
+                  - 0
+                  - 10
+                  - 100
+                  - 150
+                  - 200
+                  - 250
+                  - 300
+      otlp:
+        enabled: true
+        # Endpoint for your region.
+        endpoint: https://otlp.eu01.nr-data.net
+        protocol: grpc
+        grpc:
+          metadata:
+            "api-key":
+              - eu01xx9c3c76a68efb2a90b3b93863d0FFFFNRAL
+    
   # exporters:
   #   tracing:
   #     common:
