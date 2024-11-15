@@ -39,26 +39,12 @@ telemetry:
         sampler: 1.0 # enable this for Studio OTEL spans
       otlp:
         enabled: true
-
-        # Optional endpoint, either 'default' or a URL (Defaults to http://127.0.0.1:4317 for gRPC and http://127.0.0.1:4318 for HTTP)
-        # endpoint: 'https://api.honeycomb.io:443'
-        endpoint: 'https://api.honeycomb.io/v1/traces'
-
-        # Optional protocol (Defaults to grpc)
+        endpoint: 'https://api.honeycomb.io:443'
         protocol: grpc
-
-        # Optional Grpc configuration
         grpc:
           metadata:
             'x-honeycomb-team': '2jN8jkeozV5bHoUFTcfc1B'
             'x-honeycomb-dataset': 'workshop'
-
-        batch_processor:
-          max_export_batch_size: 512
-          max_concurrent_exports: 1
-          max_export_timeout: 30s
-          max_queue_size: 2048
-          scheduled_delay: 5s
 #
 #
 #
