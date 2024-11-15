@@ -27,3 +27,8 @@ jobs:
 
       - name: Add Secret data
         run: gcloud secrets versions add --data-file=./router/router.yaml ${{vars.ACTOR}}
+
+  restart-router:
+    needs: deploy
+    uses: ./.github/workflows/restart-router.yml
+    secrets: inherit
