@@ -39,10 +39,13 @@ telemetry:
     tracing:
       common:
         service_name: 'workshop'
-        sampler: 1.0 # enable this for Studio OTEL spans
+        service_namespace: 'apollo'
+        sampler: always_on # enable this for Studio OTEL spans
+        parent_based_sampler: true
       otlp:
         enabled: true
-        endpoint: 'https://api.honeycomb.io:443'
+        # endpoint: 'https://api.honeycomb.io:443'
+        endpoint: api.honeycomb.io:443
         protocol: grpc
         grpc:
           metadata:
