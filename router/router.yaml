@@ -42,7 +42,7 @@ telemetry:
 
         # Optional endpoint, either 'default' or a URL (Defaults to http://127.0.0.1:4317 for gRPC and http://127.0.0.1:4318 for HTTP)
         # endpoint: 'https://api.honeycomb.io:443'
-        endpoint: 'https://api.honeycomb.io/v1/traces'
+        endpoint: 'api.honeycomb.io/v1/traces'
 
         # Optional protocol (Defaults to grpc)
         protocol: grpc
