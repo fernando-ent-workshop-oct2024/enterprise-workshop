@@ -98,7 +98,7 @@ telemetry:
       otlp:
         enabled: true
         # Endpoint for your region.
-        endpoint: trace-api.eu.newrelic.com/trace/v1
+        endpoint: https://otlp.eu01.nr-data.net
         protocol: grpc
         grpc:
           metadata:
