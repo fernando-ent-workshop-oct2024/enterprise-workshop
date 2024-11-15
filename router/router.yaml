@@ -34,6 +34,9 @@ subscription:
 telemetry:
   exporters:
     tracing:
+      common:
+        service_name: 'workshop'
+        sampler: 1.0 # enable this for Studio OTEL spans
       otlp:
         enabled: true
 
