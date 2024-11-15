@@ -40,4 +40,4 @@ jobs:
           gcloud run services update ${{vars.ACTOR}}-router --image gcr.io/summit-enterprise-workshop/router-v2_0-preview:latest \
             --command=/dist/router \
             --set-secrets=/dist/config/router.yaml=${{vars.ACTOR}}:latest \
-            --set-env-vars "APOLLO_ROUTER_HOT_RELOAD=false,APOLLO_KEY=${{ vars.TOKEN }},APOLLO_GRAPH_REF=${{vars.ACTOR}}${{env.GEN}}@current" --platform managed --region us-central1
+            --set-env-vars "APOLLO_ROUTER_LOG=debug,APOLLO_ROUTER_HOT_RELOAD=false,APOLLO_KEY=${{ vars.TOKEN }},APOLLO_GRAPH_REF=${{vars.ACTOR}}${{env.GEN}}@current" --platform managed --region us-central1
