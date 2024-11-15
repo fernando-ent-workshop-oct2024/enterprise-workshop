@@ -36,7 +36,7 @@ telemetry:
       mode: 'spec_compliant'
   apollo:
     field_level_instrumentation_sampler: 1
-    experimental_local_field_metrics: true
+    # experimental_local_field_metrics: true
 
   exporters:
     tracing:
