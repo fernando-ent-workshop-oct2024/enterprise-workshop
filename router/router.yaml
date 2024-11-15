@@ -32,6 +32,9 @@ subscription:
 ### Enter Workshop Module Configs Below
 
 telemetry:
+  instrumentation:
+    spans:
+      mode: 'spec_compliant'
   exporters:
     tracing:
       common:
