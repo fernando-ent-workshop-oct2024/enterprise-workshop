@@ -94,10 +94,10 @@ telemetry:
             graphql.operation.name: true
 
   exporters:
-    common:
-      service_name: 'demo'
-      sampler: 1.0 # enable this for Studio OTEL spans
     tracing:
+      common:
+        service_name: 'demo'
+        sampler: 1.0 # enable this for Studio OTEL spans
       otlp:
         enabled: true
         # Endpoint for your region.
