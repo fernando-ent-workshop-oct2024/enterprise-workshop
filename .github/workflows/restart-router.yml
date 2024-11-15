@@ -1,13 +1,13 @@
 name: Restart Router on Cloud Run
 
 on:
-  push:
-    paths:
-      - '**.yaml'
+  # push:
+  #   paths:
+  #     - '**.yaml'
   workflow_dispatch:
   workflow_call:
-  repository_dispatch:
-    types: [update-router-event]
+  # repository_dispatch:
+  #   types: [update-router-event]
 
 env:
   GEN: ${{ secrets.GEN || 'ws1' }}
