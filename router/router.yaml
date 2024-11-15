@@ -44,8 +44,8 @@ telemetry:
         # parent_based_sampler: true
       otlp:
         enabled: true
-        # endpoint: 'https://api.honeycomb.io:443'
-        endpoint: 'api.honeycomb.io:443'
+        endpoint: 'api.honeycomb.io:443/v1/traces'
+        # endpoint: 'api.honeycomb.io:443'
         protocol: grpc
         grpc:
           metadata:
