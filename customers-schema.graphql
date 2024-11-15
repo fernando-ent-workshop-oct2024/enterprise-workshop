@@ -1,12 +1,18 @@
+directive @cost(
+  weight: Int!
+) on ARGUMENT_DEFINITION | ENUM | FIELD_DEFINITION | INPUT_FIELD_DEFINITION | OBJECT | SCALAR
+
+directive @listSize(
+  assumedSize: Int
+  slicingArguments: [String!]
+  sizedFields: [String!]
+  requireOneSlicingArgument: Boolean = true
+) on FIELD_DEFINITION
+
 extend schema
-  @link(url: "https://specs.apollo.dev/federation/v2.8", import:
-    [
-      "@key",
-      "@requires",
-      "@external",
-      "@tag",
-      "@shareable"
-    ]
+  @link(
+    url: "https://specs.apollo.dev/federation/v2.9"
+    import: ["@key", "@requires", "@external", "@tag", "@shareable"]
   )
 
 type Query {
@@ -23,12 +29,8 @@ type User @key(fields: "id") {
   firstName: String @tag(name: "private")
   lastName: String @tag(name: "private")
   address: String @tag(name: "private")
-  phone: String
-    @tag(name: "private")
-    @shareable
-  email: String!
-    @tag(name: "private")
-    @shareable
+  phone: String @tag(name: "private") @shareable
+  email: String! @tag(name: "private") @shareable
 
   """
   The user's active cart session. Once the cart items have been purchases, they transition to an Order
@@ -40,7 +42,7 @@ type User @key(fields: "id") {
   """
   orders(filters: OrderFilters): [Order]
 
-  paymentMethods: [PaymentMethod]
+  paymentMethods: [PaymentMethod] @listSize(assumedSize: 5)
 }
 
 """
@@ -77,7 +79,7 @@ type ProductVariant @key(fields: "id", resolvable: false) {
   price: Float! @external
 }
 
-type PaymentMethod {
+type PaymentMethod @cost(weight: 10) {
   id: ID!
   cardNumber: String!
 }
