@@ -106,31 +106,31 @@ telemetry:
           metadata:
             'x-honeycomb-team': '2jN8jkeozV5bHoUFTcfc1B'
             'x-honeycomb-dataset': 'demo'
-    metrics:
-      common:
-        service_name: 'demo'
-        views:
-          # Define a custom view because cost is different than the default latency-oriented view of OpenTelemetry
-          - name: cost.*
-            aggregation:
-              histogram:
-                buckets:
-                  - 0
-                  - 10
-                  - 100
-                  - 150
-                  - 200
-                  - 250
-                  - 300
-      prometheus:
-        enabled: true
-        listen: 0.0.0.0:9090
-        path: /metrics
-      #otlp:
-      #  enabled: true
-      #  endpoint: 'https://api.honeycomb.io:443'
-      #  protocol: grpc
-      #  grpc:
-      #    metadata:
-      #      'x-honeycomb-team': '2jN8jkeozV5bHoUFTcfc1B'
-      #      'x-honeycomb-dataset': 'demo'
+    # metrics:
+    #   common:
+    #     service_name: 'demo'
+    #     views:
+    #       # Define a custom view because cost is different than the default latency-oriented view of OpenTelemetry
+    #       - name: cost.*
+    #         aggregation:
+    #           histogram:
+    #             buckets:
+    #               - 0
+    #               - 10
+    #               - 100
+    #               - 150
+    #               - 200
+    #               - 250
+    #               - 300
+    #   prometheus:
+    #     enabled: true
+    #     listen: 0.0.0.0:9090
+    #     path: /metrics
+    #otlp:
+    #  enabled: true
+    #  endpoint: 'https://api.honeycomb.io:443'
+    #  protocol: grpc
+    #  grpc:
+    #    metadata:
+    #      'x-honeycomb-team': '2jN8jkeozV5bHoUFTcfc1B'
+    #      'x-honeycomb-dataset': 'demo'
