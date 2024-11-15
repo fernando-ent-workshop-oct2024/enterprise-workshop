@@ -45,7 +45,7 @@ telemetry:
       otlp:
         enabled: true
         # endpoint: 'https://api.honeycomb.io:443'
-        endpoint: api.honeycomb.io:443
+        endpoint: 'api.honeycomb.io:443'
         protocol: grpc
         grpc:
           metadata:
