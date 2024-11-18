@@ -1,26 +1,21 @@
-
 extend schema
   @link(
     url: "https://specs.apollo.dev/federation/v2.9"
-    import: ["@key", "@requires", "@external", "@tag", "@shareable", "@cost", "@listSize"]
+    import: [
+      "@key"
+      "@requires"
+      "@external"
+      "@tag"
+      "@shareable"
+      "@cost"
+      "@listSize"
+    ]
   )
 
 type Query {
   users: [User]
   user(id: ID!): User
 }
-
-#directive @cost(
-#  weight: Int!
-#) on ARGUMENT_DEFINITION | ENUM | FIELD_DEFINITION | INPUT_FIELD_DEFINITION | OBJECT | SCALAR
-#
-#directive @listSize(
-#  assumedSize: Int
-#  slicingArguments: [String!]
-#  sizedFields: [String!]
-#  requireOneSlicingArgument: Boolean = true
-#) on FIELD_DEFINITION
-
 
 """
 An user account in our system
@@ -37,14 +32,14 @@ type User @key(fields: "id") {
   """
   The user's active cart session. Once the cart items have been purchases, they transition to an Order
   """
-  activeCart: Cart
+  activeCart: Cart @cost(weight: 100)
 
   """
   The users previous purchases
   """
   orders(filters: OrderFilters): [Order]
 
-  paymentMethods: [PaymentMethod] @listSize(assumedSize: 5) @cost(weight: 500)
+  paymentMethods: [PaymentMethod]
 }
 
 """
@@ -81,7 +76,7 @@ type ProductVariant @key(fields: "id", resolvable: false) {
   price: Float! @external
 }
 
-type PaymentMethod @cost(weight: 50) {
+type PaymentMethod {
   id: ID!
   cardNumber: String!
 }

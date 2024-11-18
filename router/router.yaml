@@ -63,6 +63,7 @@ telemetry:
             cost.result: true
     spans:
       mode: 'spec_compliant'
+      sampler: 1.0
       supergraph:
         attributes:
           cost.estimated: true
