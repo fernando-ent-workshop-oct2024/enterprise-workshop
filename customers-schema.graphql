@@ -79,7 +79,7 @@ type ProductVariant @key(fields: "id", resolvable: false) {
   price: Float! @external
 }
 
-type PaymentMethod @cost(weight: 10) {
+type PaymentMethod @cost(weight: 50) {
   id: ID!
   cardNumber: String!
 }
