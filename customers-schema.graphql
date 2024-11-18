@@ -1,24 +1,26 @@
-directive @cost(
-  weight: Int!
-) on ARGUMENT_DEFINITION | ENUM | FIELD_DEFINITION | INPUT_FIELD_DEFINITION | OBJECT | SCALAR
-
-directive @listSize(
-  assumedSize: Int
-  slicingArguments: [String!]
-  sizedFields: [String!]
-  requireOneSlicingArgument: Boolean = true
-) on FIELD_DEFINITION
 
 extend schema
   @link(
     url: "https://specs.apollo.dev/federation/v2.9"
-    import: ["@key", "@requires", "@external", "@tag", "@shareable"]
+    import: ["@key", "@requires", "@external", "@tag", "@shareable", "@cost", "@listSize"]
   )
 
 type Query {
   users: [User]
   user(id: ID!): User
 }
+
+#directive @cost(
+#  weight: Int!
+#) on ARGUMENT_DEFINITION | ENUM | FIELD_DEFINITION | INPUT_FIELD_DEFINITION | OBJECT | SCALAR
+#
+#directive @listSize(
+#  assumedSize: Int
+#  slicingArguments: [String!]
+#  sizedFields: [String!]
+#  requireOneSlicingArgument: Boolean = true
+#) on FIELD_DEFINITION
+
 
 """
 An user account in our system
