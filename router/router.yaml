@@ -100,7 +100,7 @@ telemetry:
     tracing:
       common:
         service_name: 'demo'
-        sampler: 1.0 # enable this for Studio OTEL spans
+        sampler: always_on # enable this for Studio OTEL spans
       otlp:
         enabled: true
         # Endpoint for your region.
@@ -113,6 +113,7 @@ telemetry:
     metrics:
       common:
         service_name: 'demo'
+        sampler: always_on
         views:
           # Define a custom view because cost is different than the default latency-oriented view of OpenTelemetry
           - name: cost.*
