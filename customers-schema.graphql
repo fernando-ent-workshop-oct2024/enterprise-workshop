@@ -44,7 +44,7 @@ type User @key(fields: "id") {
   """
   orders(filters: OrderFilters): [Order]
 
-  paymentMethods: [PaymentMethod] @listSize(assumedSize: 5)
+  paymentMethods: [PaymentMethod] @listSize(assumedSize: 5) @cost(weight: 500)
 }
 
 """
