@@ -5,6 +5,9 @@ supergraph:
   listen: '0.0.0.0:${env.PORT:-4000}'
   introspection: true
 
+# https://www.apollographql.com/docs/graphos/routing/query-planning/native-query-planner#configuring-query-planning
+experimental_query_planner_mode: new
+
 # For demo purposes - can remove or enable homepage
 sandbox:
   enabled: true
