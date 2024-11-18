@@ -113,7 +113,7 @@ telemetry:
     metrics:
       common:
         service_name: 'demo'
-        sampler: always_on
+        # sampler: always_on # no sampler for metrics
         views:
           # Define a custom view because cost is different than the default latency-oriented view of OpenTelemetry
           - name: cost.*
